@@ -11,3 +11,5 @@ When viewing threads:
 4. Display this percentage below every user's reaction bar
 
 Formula for positive reaction percentage: [positives ÷ (positives + negatives) × 100]
+
+currently to install it you can use tampermonkey
