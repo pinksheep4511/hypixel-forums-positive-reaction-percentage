@@ -9,3 +9,5 @@ When viewing threads:
 2. Get the number of positive and negative reactions for each user
 3. Calculate the percentage of received reactions that are positive
 4. Display this percentage below every user's reaction bar
+
+Formula for positive reaction percentage: [positives ÷ (positives + negatives) × 100]
