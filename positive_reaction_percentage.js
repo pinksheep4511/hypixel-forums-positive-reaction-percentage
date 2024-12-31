@@ -3,7 +3,7 @@
 // @namespace    http://tampermonkey.net/
 // @version      2024-12-31
 // @description  display a forumer's positive reaction percentage
-// @author       You
+// @author       pinksheep451/pinksheep4511
 // @match        https://hypixel.net/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=hypixel.net
 // @grant        none
