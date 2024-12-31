@@ -20,6 +20,7 @@ const forumerPositiveCount = [];
 const forumerNegatives = [];
 const forumerNegativeCount = [];
 
+/* Since not all users will have positives AND negatives, we need to use variables to properly check a user's reactions in case they have either zero positives or zero negatives */
 let positivesChecked = 0;
 let negativesChecked = 0;
 
@@ -34,12 +35,13 @@ for (let i = 0; i < reactionBarCount; i++) {
     console.log("Forum user: " + forumerUsername[i]); // Log the user in the console to associate the reactions into it
 
     /* Get the users' positive reaction counts */
-    if (document.getElementsByClassName("sv-rating-count-bar")[i].getElementsByClassName("sv-rating-count-bar__fragment sv-rating-type-category2--background")[0]) { //check if the forumer has any positives
+    if (document.getElementsByClassName("sv-rating-count-bar")[i].getElementsByClassName("sv-rating-count-bar__fragment sv-rating-type-category2--background")[0]) { //Check if the forumer has any positives
         forumerPositives[positivesChecked] = document.getElementsByClassName("sv-rating-count-bar__fragment sv-rating-type-category2--background")[positivesChecked];
 
         /* Get the number of positives displayed when hovering over the green area of the reaction bar */
         forumerPositiveCount[i] = forumerPositives[positivesChecked].getAttribute("data-original-title");
         forumerPositiveCount[i] = parseInt(forumerPositiveCount[i].match(/\d+/));
+
         positivesChecked += 1;
     }
     else {
@@ -48,12 +50,13 @@ for (let i = 0; i < reactionBarCount; i++) {
     console.log("Positive reactions: " + forumerPositiveCount[i]); //Log the positive reaction count into the console
 
     /* Get the users' negative reaction counts */
-    if (document.getElementsByClassName("sv-rating-count-bar")[i].getElementsByClassName("sv-rating-count-bar__fragment sv-rating-type-category1--background")[0]) { //check if the forumer has any negatives
+    if (document.getElementsByClassName("sv-rating-count-bar")[i].getElementsByClassName("sv-rating-count-bar__fragment sv-rating-type-category1--background")[0]) { //Check if the forumer has any negatives
         forumerNegatives[negativesChecked] = document.getElementsByClassName("sv-rating-count-bar__fragment sv-rating-type-category1--background")[negativesChecked];
 
         /* Get the number of negatives displayed when hovering over the red area of the reaction bar */
         forumerNegativeCount[i] = forumerNegatives[negativesChecked].getAttribute("data-original-title");
         forumerNegativeCount[i] = parseInt(forumerNegativeCount[i].match(/\d+/));
+
         negativesChecked += 1;
     }
     else {
@@ -62,9 +65,9 @@ for (let i = 0; i < reactionBarCount; i++) {
     console.log("Negative reactions: " + forumerNegativeCount[i]); //Log the negative reaction count into the console
 }
 
-// Display the user's positive reaction percentage
+/* Display the user's positive reaction percentage */
 for (let i = 0; i < reactionBarCount; i++) {
-    let positiveReactionPercent = Math.round(forumerPositiveCount[i] / (forumerPositiveCount[i] + forumerNegativeCount[i]) * 10000) / 100; //calculate the positive reaction percentage
+    let positiveReactionPercent = Math.round(forumerPositiveCount[i] / (forumerPositiveCount[i] + forumerNegativeCount[i]) * 10000) / 100; //calculate the positive reaction percentage with up to two decimal places of precision
     let red;
     let green;
 
@@ -81,5 +84,5 @@ for (let i = 0; i < reactionBarCount; i++) {
         red = 204;
         green = 0;
     }
-    positiveReactionPercentage[i].insertAdjacentHTML("afterend", "<div style=\"text-align:center;background:rgb(" + red + "," + green + ",0)\">" + positiveReactionPercent + "% positive</div>"); //display the positive reaction percentage
+    positiveReactionPercentage[i].insertAdjacentHTML("afterend", "<div style=\"text-align:center;background:rgb(" + red + "," + green + ",0)\">" + positiveReactionPercent + "% positive</div>"); //finally, display the positive reaction percentage below the user's reaction bar
 }
