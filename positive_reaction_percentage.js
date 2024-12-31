@@ -13,6 +13,8 @@
 let reactionBarCount = document.getElementsByClassName("sv-rating-count-bar").length;
 const positiveReactionPercentage = document.getElementsByClassName("sv-rating-count-bar");
 
+const forumer = [];
+const forumerUsername = [];
 const forumerPositives = [];
 const forumerPositiveCount = [];
 const forumerNegatives = [];
@@ -23,6 +25,14 @@ let negativesChecked = 0;
 
 /* Get the users' positive and negative reaction counts */
 for (let i = 0; i < reactionBarCount; i++) {
+    /* Add a line break to the console to improve readability */
+    console.log("");
+
+    /* Get the forum user that made the post */
+    forumer[i] = document.getElementsByClassName("message message--post js-post js-inlineModContainer   ")[i];
+    forumerUsername[i] = forumer[i].getAttribute("data-author");
+    console.log("Forum user: " + forumerUsername[i]); // Log the user in the console to associate the reactions into it
+
     /* Get the users' positive reaction counts */
     if (document.getElementsByClassName("sv-rating-count-bar")[i].getElementsByClassName("sv-rating-count-bar__fragment sv-rating-type-category2--background")[0]) { //check if the forumer has any positives
         forumerPositives[positivesChecked] = document.getElementsByClassName("sv-rating-count-bar__fragment sv-rating-type-category2--background")[positivesChecked];
@@ -35,7 +45,7 @@ for (let i = 0; i < reactionBarCount; i++) {
     else {
         forumerPositiveCount[i] = 0;
     }
-    console.log(forumerPositiveCount[i]);
+    console.log("Positive reactions: " + forumerPositiveCount[i]); //Log the positive reaction count into the console
 
     /* Get the users' negative reaction counts */
     if (document.getElementsByClassName("sv-rating-count-bar")[i].getElementsByClassName("sv-rating-count-bar__fragment sv-rating-type-category1--background")[0]) { //check if the forumer has any negatives
@@ -49,10 +59,27 @@ for (let i = 0; i < reactionBarCount; i++) {
     else {
         forumerNegativeCount[i] = 0;
     }
-    console.log(forumerNegativeCount[i]);
+    console.log("Negative reactions: " + forumerNegativeCount[i]); //Log the negative reaction count into the console
 }
 
 // Display the user's positive reaction percentage
 for (let i = 0; i < reactionBarCount; i++) {
-    positiveReactionPercentage[i].insertAdjacentHTML("afterend", "<div style=\"text-align:center;color:rgb(0,0,0)\">" + Math.round(forumerPositiveCount[i] / (forumerPositiveCount[i] + forumerNegativeCount[i]) * 10000) / 100 + "%</div>");
+    let positiveReactionPercent = Math.round(forumerPositiveCount[i] / (forumerPositiveCount[i] + forumerNegativeCount[i]) * 10000) / 100; //calculate the positive reaction percentage
+    let red;
+    let green;
+
+    /* Change the background color of the display depending on the positive reaction percentage */
+    if (positiveReactionPercent >= 80) {
+        red = Math.round((100 - positiveReactionPercent) * 204 / 20);
+        green = 204;
+    }
+    else if (positiveReactionPercent >= 60) {
+        red = 204;
+        green = Math.round((positiveReactionPercent - 60) * 204 / 20);
+    }
+    else {
+        red = 204;
+        green = 0;
+    }
+    positiveReactionPercentage[i].insertAdjacentHTML("afterend", "<div style=\"text-align:center;background:rgb(" + red + "," + green + ",0)\">" + positiveReactionPercent + "% positive</div>"); //display the positive reaction percentage
 }
