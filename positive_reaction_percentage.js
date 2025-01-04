@@ -39,9 +39,14 @@ for (let i = 0; i < reactionBarCount; i++) {
         forumerPositives[positivesChecked] = document.getElementsByClassName("sv-rating-count-bar__fragment sv-rating-type-category2--background")[positivesChecked];
 
         /* Get the number of positives displayed when hovering over the green area of the reaction bar */
-        forumerPositiveCount[i] = forumerPositives[positivesChecked].getAttribute("data-original-title");
-        forumerPositiveCount[i] = parseInt(forumerPositiveCount[i].match(/\d+/));
-
+        try {
+            forumerPositiveCount[i] = forumerPositives[positivesChecked].getAttribute("data-original-title");
+            forumerPositiveCount[i] = parseInt(forumerPositiveCount[i].match(/\d+/));
+        }
+        catch (error) {
+            console.log("Oops! Something went wrong while fetching the user's positive reaction count, try refreshing the page.");
+            forumerPositiveCount[i] = 0;
+        }
         positivesChecked += 1;
     }
     else {
@@ -54,9 +59,14 @@ for (let i = 0; i < reactionBarCount; i++) {
         forumerNegatives[negativesChecked] = document.getElementsByClassName("sv-rating-count-bar__fragment sv-rating-type-category1--background")[negativesChecked];
 
         /* Get the number of negatives displayed when hovering over the red area of the reaction bar */
-        forumerNegativeCount[i] = forumerNegatives[negativesChecked].getAttribute("data-original-title");
-        forumerNegativeCount[i] = parseInt(forumerNegativeCount[i].match(/\d+/));
-
+        try {
+            forumerNegativeCount[i] = forumerNegatives[negativesChecked].getAttribute("data-original-title");
+            forumerNegativeCount[i] = parseInt(forumerNegativeCount[i].match(/\d+/));
+        }
+        catch (error) {
+            console.log("Oops! Something went wrong while fetching the user's negative reaction count, try refreshing the page.");
+            forumerNegativeCount[i] = 0;
+        }
         negativesChecked += 1;
     }
     else {
@@ -80,9 +90,15 @@ for (let i = 0; i < reactionBarCount; i++) {
         red = 204;
         green = Math.round((positiveReactionPercent - 60) * 204 / 20);
     }
-    else {
+    else if (positiveReactionPercent >= 0) {
         red = 204;
         green = 0;
     }
-    positiveReactionPercentage[i].insertAdjacentHTML("afterend", "<div style=\"text-align:center;background:rgb(" + red + "," + green + ",0)\">" + positiveReactionPercent + "% positive</div>"); //finally, display the positive reaction percentage below the user's reaction bar
+
+    if (isNaN(positiveReactionPercent)) {
+        positiveReactionPercentage[i].insertAdjacentHTML("afterend", "<div style=\"text-align:center\">Oops! Something went wrong, try refreshing the page.</div>");
+    }
+    else {
+        positiveReactionPercentage[i].insertAdjacentHTML("afterend", "<div style=\"text-align:center;background:rgb(" + red + "," + green + ",0)\">" + positiveReactionPercent + "% positive</div>"); //finally, display the positive reaction percentage below the user's reaction bar
+    }
 }
