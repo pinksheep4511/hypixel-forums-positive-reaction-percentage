@@ -81,16 +81,23 @@ for (let i = 0; i < reactionBarCount; i++) {
     let red;
     let green;
 
-    /* Change the background color of the display depending on the positive reaction percentage */
-    if (positiveReactionPercent >= 80) {
-        red = Math.round((100 - positiveReactionPercent) * 204 / 20);
+    /* Change the background color of the display depending on the positive reaction percentage and the color thresholds */
+    let red_threshold = 60;
+    let yellow_threshold = 80;
+    let green_threshold = 100;
+    if (positiveReactionPercent >= green_threshold) { //set the background to a green color when the positive % is at or above the "green threshold"
+        red = 0;
         green = 204;
     }
-    else if (positiveReactionPercent >= 60) {
-        red = 204;
-        green = Math.round((positiveReactionPercent - 60) * 204 / 20);
+    else if (positiveReactionPercent >= yellow_threshold) { //set the background to a scaling color between yellow and green when the positive % is at or above the "yellow threshold"
+        red = Math.round((100 - positiveReactionPercent) * 204 / (green_threshold - yellow_threshold));
+        green = 204;
     }
-    else if (positiveReactionPercent >= 0) {
+    else if (positiveReactionPercent >= red_threshold) { //set the background to a scaling color between red and yellow when the positive % is at or above the "red threshold"
+        red = 204;
+        green = Math.round((positiveReactionPercent - red_threshold) * 204 / (yellow_threshold - red_threshold));
+    }
+    else if (positiveReactionPercent >= 0) { //set the background to a scaling color between red and yellow when the positive % is below the "red threshold"
         red = 204;
         green = 0;
     }
