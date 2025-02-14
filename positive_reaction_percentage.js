@@ -90,7 +90,7 @@ for (let i = 0; i < reactionBarCount; i++) {
         green = 204;
     }
     else if (positiveReactionPercent >= yellow_threshold) { //set the background to a scaling color between yellow and green when the positive % is at or above the "yellow threshold"
-        red = Math.round((100 - positiveReactionPercent) * 204 / (green_threshold - yellow_threshold));
+        red = Math.round((green_threshold - positiveReactionPercent) * 204 / (green_threshold - yellow_threshold));
         green = 204;
     }
     else if (positiveReactionPercent >= red_threshold) { //set the background to a scaling color between red and yellow when the positive % is at or above the "red threshold"
