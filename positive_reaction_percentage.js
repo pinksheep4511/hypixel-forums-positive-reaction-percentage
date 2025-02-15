@@ -24,7 +24,7 @@ const forumerNegativeCount = [];
 let positivesChecked = 0;
 let negativesChecked = 0;
 
-/* Get the users' positive and negative reaction counts */
+/* Get the users' positive and negative reaction counts (this unfortunately does not work all the time) */
 for (let i = 0; i < reactionBarCount; i++) {
     /* Add a line break to the console to improve readability */
     console.log("");
@@ -42,6 +42,7 @@ for (let i = 0; i < reactionBarCount; i++) {
         try {
             forumerPositiveCount[i] = forumerPositives[positivesChecked].getAttribute("data-original-title");
             forumerPositiveCount[i] = parseInt(forumerPositiveCount[i].match(/\d+/));
+            console.log("Positive reactions: " + forumerPositiveCount[i]); //Log the positive reaction count into the console
         }
         catch (error) {
             console.log("Oops! Something went wrong while fetching the user's positive reaction count, try refreshing the page.");
@@ -51,8 +52,8 @@ for (let i = 0; i < reactionBarCount; i++) {
     }
     else {
         forumerPositiveCount[i] = 0;
+        console.log("Positive reactions: " + forumerPositiveCount[i]); //Log 0 positive reactions into the console since the forumer doesn't have any positives
     }
-    console.log("Positive reactions: " + forumerPositiveCount[i]); //Log the positive reaction count into the console
 
     /* Get the users' negative reaction counts */
     if (document.getElementsByClassName("sv-rating-count-bar")[i].getElementsByClassName("sv-rating-count-bar__fragment sv-rating-type-category1--background")[0]) { //Check if the forumer has any negatives
@@ -62,6 +63,7 @@ for (let i = 0; i < reactionBarCount; i++) {
         try {
             forumerNegativeCount[i] = forumerNegatives[negativesChecked].getAttribute("data-original-title");
             forumerNegativeCount[i] = parseInt(forumerNegativeCount[i].match(/\d+/));
+            console.log("Negative reactions: " + forumerNegativeCount[i]); //Log the negative reaction count into the console
         }
         catch (error) {
             console.log("Oops! Something went wrong while fetching the user's negative reaction count, try refreshing the page.");
@@ -71,8 +73,8 @@ for (let i = 0; i < reactionBarCount; i++) {
     }
     else {
         forumerNegativeCount[i] = 0;
+        console.log("Negative reactions: " + forumerNegativeCount[i]); //Log 0 negative reactions into the console since the forumer doesn't have any negatives
     }
-    console.log("Negative reactions: " + forumerNegativeCount[i]); //Log the negative reaction count into the console
 }
 
 /* Display the user's positive reaction percentage */
