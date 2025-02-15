@@ -75,15 +75,12 @@ for (let i = 0; i < reactionBarCount; i++) {
         forumerNegativeCount[i] = 0;
         console.log("Negative reactions: " + forumerNegativeCount[i]); //Log 0 negative reactions into the console since the forumer doesn't have any negatives
     }
-}
 
-/* Display the user's positive reaction percentage */
-for (let i = 0; i < reactionBarCount; i++) {
-    let positiveReactionPercent = Math.round(forumerPositiveCount[i] / (forumerPositiveCount[i] + forumerNegativeCount[i]) * 10000) / 100; //calculate the positive reaction percentage with up to two decimal places of precision
-    let red;
-    let green;
+    let positiveReactionPercent = forumerPositiveCount[i] / (forumerPositiveCount[i] + forumerNegativeCount[i]) * 100; //calculate the positive reaction percentage
 
     /* Change the background color of the display depending on the positive reaction percentage and the color thresholds */
+    let red;
+    let green;
     let red_threshold = 60;
     let yellow_threshold = 80;
     let green_threshold = 100;
@@ -104,10 +101,12 @@ for (let i = 0; i < reactionBarCount; i++) {
         green = 0;
     }
 
+    /* Display the user's positive reaction percentage */
     if (isNaN(positiveReactionPercent)) {
         positiveReactionPercentage[i].insertAdjacentHTML("afterend", "<div style=\"text-align:center\">Oops! Something went wrong, try refreshing the page.</div>");
     }
     else {
-        positiveReactionPercentage[i].insertAdjacentHTML("afterend", "<div style=\"text-align:center;background:rgb(" + red + "," + green + ",0)\">" + positiveReactionPercent + "% positive</div>"); //finally, display the positive reaction percentage below the user's reaction bar
+        positiveReactionPercentage[i].insertAdjacentHTML("afterend", "<div style=\"text-align:center;background:rgb(" + red + "," + green + ",0)\">" + (Math.round(positiveReactionPercent * 100) / 100) + "% positive</div>"); //finally, display the positive reaction percentage (with up to two decimal places of precision) below the user's reaction bar
+        console.log(positiveReactionPercent + "% positive reactions"); //Log the positive % into the console (with full precision)
     }
 }
