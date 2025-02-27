@@ -46,6 +46,7 @@ for (let i = 0; i < reactionBarCount; i++) {
         }
         catch (error) {
             console.log("Oops! Something went wrong while fetching the user's positive reaction count, try refreshing the page.");
+            console.log("This is usually due to reaction bars not being loaded before the reaction counts were fetched, causing the reaction counts to return nothing. In this case, refreshing the page might help.");
             forumerPositiveCount[i] = 0;
         }
         positivesChecked += 1;
@@ -67,6 +68,7 @@ for (let i = 0; i < reactionBarCount; i++) {
         }
         catch (error) {
             console.log("Oops! Something went wrong while fetching the user's negative reaction count, try refreshing the page.");
+            console.log("This is usually due to reaction bars not being loaded before the reaction counts were fetched, causing the reaction counts to return nothing. In this case, refreshing the page might help.");
             forumerNegativeCount[i] = 0;
         }
         negativesChecked += 1;
