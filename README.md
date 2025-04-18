@@ -15,4 +15,5 @@ Formula for positive reaction percentage: [positives ÷ (positives + negatives) 
 currently to install it you can use tampermonkey
 
 note: there is a small chance that the script will fail to get the reaction counts (and display an "Oops" message); if this happens, simply reload the page, and you will be able to see the positive % under the reaction bars
+
 this is usually due to reaction bars not being loaded when the script ran, causing the reaction counts to return nothing
