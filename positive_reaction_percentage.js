@@ -46,7 +46,7 @@ for (let i = 0; i < reactionBarCount; i++) {
         }
         catch (error) {
             console.log("Oops! Something went wrong while fetching the user's positive reaction count, try refreshing the page.");
-            console.log("This is usually due to reaction bars not being loaded before the reaction counts were fetched, causing the reaction counts to return nothing. In this case, refreshing the page might help.");
+            console.log(forumerPositives[positivesChecked].getAttribute("aria-label"));
             forumerPositiveCount[i] = 0;
         }
         positivesChecked += 1;
@@ -68,7 +68,7 @@ for (let i = 0; i < reactionBarCount; i++) {
         }
         catch (error) {
             console.log("Oops! Something went wrong while fetching the user's negative reaction count, try refreshing the page.");
-            console.log("This is usually due to reaction bars not being loaded before the reaction counts were fetched, causing the reaction counts to return nothing. In this case, refreshing the page might help.");
+            console.log(forumerNegatives[negativesChecked].getAttribute("aria-label"));
             forumerNegativeCount[i] = 0;
         }
         negativesChecked += 1;
@@ -98,12 +98,12 @@ for (let i = 0; i < reactionBarCount; i++) {
         red = 204;
         green = Math.round((positiveReactionPercent - red_threshold) * 204 / (yellow_threshold - red_threshold));
     }
-    else if (positiveReactionPercent >= 0) { //set the background to a scaling color between red and yellow when the positive % is below the "red threshold"
+    else if (positiveReactionPercent >= 0) { //set the background to a red color when the positive % is below the "red threshold"
         red = 204;
         green = 0;
     }
 
-    /* Display the user's positive reaction percentage */
+    /* Display the user's positive reaction percentage in most cases (there is a small chance the script will run before the reaction bars load, causing it to display an error message) */
     if (isNaN(positiveReactionPercent)) {
         positiveReactionPercentage[i].insertAdjacentHTML("afterend", "<div style=\"text-align:center\">Oops! Something went wrong, try refreshing the page.</div>");
     }
