@@ -46,7 +46,7 @@ for (let i = 0; i < reactionBarCount; i++) {
         }
         catch (error) {
             console.log("Oops! Something went wrong while fetching the user's positive reaction count, try refreshing the page.");
-            console.log(forumerPositives[positivesChecked].getAttribute("aria-label"));
+            console.log("This is usually due to reaction bars not being loaded before the reaction counts were fetched, causing the reaction counts to return nothing. In this case, refreshing the page might help.");
             forumerPositiveCount[i] = 0;
         }
         positivesChecked += 1;
@@ -68,7 +68,7 @@ for (let i = 0; i < reactionBarCount; i++) {
         }
         catch (error) {
             console.log("Oops! Something went wrong while fetching the user's negative reaction count, try refreshing the page.");
-            console.log(forumerNegatives[negativesChecked].getAttribute("aria-label"));
+            console.log("This is usually due to reaction bars not being loaded before the reaction counts were fetched, causing the reaction counts to return nothing. In this case, refreshing the page might help.");
             forumerNegativeCount[i] = 0;
         }
         negativesChecked += 1;
@@ -84,26 +84,26 @@ for (let i = 0; i < reactionBarCount; i++) {
     let red;
     let green;
     let red_threshold = 60;
-    let yellow_threshold = 80;
+    let yellow_threshold = 90;
     let green_threshold = 100;
     if (positiveReactionPercent >= green_threshold) { //set the background to a green color when the positive % is at or above the "green threshold"
         red = 0;
         green = 204;
     }
     else if (positiveReactionPercent >= yellow_threshold) { //set the background to a scaling color between yellow and green when the positive % is at or above the "yellow threshold"
-        red = Math.round((green_threshold - positiveReactionPercent) * 204 / (green_threshold - yellow_threshold));
+        red = Math.round(204 * ((green_threshold - positiveReactionPercent) / (green_threshold - yellow_threshold)) ** 2);
         green = 204;
     }
     else if (positiveReactionPercent >= red_threshold) { //set the background to a scaling color between red and yellow when the positive % is at or above the "red threshold"
         red = 204;
-        green = Math.round((positiveReactionPercent - red_threshold) * 204 / (yellow_threshold - red_threshold));
+        green = Math.round(204 * ((positiveReactionPercent - red_threshold) / (yellow_threshold - red_threshold)) ** 2);
     }
-    else if (positiveReactionPercent >= 0) { //set the background to a red color when the positive % is below the "red threshold"
+    else if (positiveReactionPercent >= 0) { //set the background to a scaling color between red and yellow when the positive % is below the "red threshold"
         red = 204;
         green = 0;
     }
 
-    /* Display the user's positive reaction percentage in most cases (there is a small chance the script will run before the reaction bars load, causing it to display an error message) */
+    /* Display the user's positive reaction percentage */
     if (isNaN(positiveReactionPercent)) {
         positiveReactionPercentage[i].insertAdjacentHTML("afterend", "<div style=\"text-align:center\">Oops! Something went wrong, try refreshing the page.</div>");
     }
